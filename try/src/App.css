@@ -1,0 +1,132 @@
+/* Global Styles */
+body {
+  background-color: #1f1e1e;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* Container Styles */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.Box-1 {
+  background: #353434;
+  padding: 2%;
+  width: 100%; /* Full width on small screens */
+  max-width: 400px; /* Limit width on larger screens */
+  margin-bottom: 20px;
+  box-shadow: 0px 5px 7px rgb(27, 27, 27);
+}
+
+.categorized-expenses-box {
+  background-color: #414040;
+  padding: 2%;
+  width: 100%; /* Full width on small screens */
+  max-width: 400px; /* Limit width on larger screens */
+  margin-bottom: 20px;
+  box-shadow: 0px 5px 7px rgb(27, 27, 27);
+}
+
+/* Input and Button Styles */
+.expense-input {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgb(78, 78, 78);
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+}
+
+.expense-input-item {
+  margin-bottom: 15px;
+}
+
+.expense-input-item label {
+  font-weight: bold;
+}
+
+.expense-input-item input {
+  margin-top: 10px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  width: 95%;
+  transition: border-color 0.3s ease;
+}
+.secondary-btn {
+  margin-bottom: 10px;
+}
+
+.primarybtn,
+.secondary-btn {
+  background-color: rgb(71, 71, 71);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+  width:20%;
+}
+
+.primarybtn:hover,
+.secondary-btn:hover {
+  background-color: rgb(0, 230, 122);
+}
+
+/* Expense List Item Styles */
+.expense-list-item {
+  background-color: #414040;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0px 3px 5px rgb(43, 42, 42);
+}
+
+.expense-list-item h3 {
+  font-size: 25px;
+  color: rgb(0, 230, 122);
+  font-weight: bold;
+  margin: 0;
+}
+
+.expense-list-item p {
+  font-size: 14px;
+  color: rgb(161, 161, 161);
+  margin-top: 8px;
+}
+
+.icon {
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: red;
+}
+
+/* Media Queries for Responsive Design */
+@media (min-width: 768px) {
+  .container {
+    justify-content: space-between;
+  }
+
+  .Box-1,
+  .categorized-expenses-box {
+    width: 45%; /* Adjust width on larger screens */
+    max-width: none;
+  }
+}
