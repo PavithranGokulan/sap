@@ -6,15 +6,55 @@ function App() {
   const [showCategorizedBox, setShowCategorizedBox] = useState(true);
   const [categorizedExpenses, setCategorizedExpenses] = useState([]);
 
+  const [allexpense, setexpense] = useState([]);
+  const [newdesc, setnewdesc] = useState("");
+  const [newprice, setnewprice] = useState("");
+
+  const handleexpense = () => {
+    let newexpense = {
+      description: newdesc,
+      price: newprice
+    };
+
+    let updatednewexpense = [...allexpense]; 
+    updatednewexpense.push(newexpense);
+    setexpense(updatednewexpense);
+    localStorage.setItem('expenses', JSON.stringify(updatednewexpense));
+    
+    setnewdesc("");
+    setnewprice("");
+  };
+
+  useEffect(()=>{
+    let savedexpense = JSON.parse(localStorage.getItem('expenses'));
+    if(savedexpense){
+      setexpense(savedexpense);
+    }
+  },[])
+
+  const handledeleteexpense = (index)=>{
+    let reducedexpense = [...allexpense];
+    reducedexpense.splice(index);
+
+    localStorage.setItem('expenses',JSON.stringify(reducedexpense));
+    setexpense(reducedexpense);
+  };
+
   const handleCategorizeClick = () => {
     const staticLabels = ['Category 1', 'Category 2', 'Category 3'];
     setCategorizedExpenses(staticLabels);
     setShowCategorizedBox(true);
-  };
-  
-  useEffect(()=>{
-    document.title = "Expense Categorization Bot"
-  })
+  }; 
+
+  useEffect(() => {
+    document.title = "Expense Categorization Bot";
+
+    // Load initial state from localStorage
+    const storedExpenses = localStorage.getItem('expenses');
+    if (storedExpenses) {
+      setexpense(JSON.parse(storedExpenses));
+    }
+  }, []);
 
   return (
     <div className='App'>
@@ -25,14 +65,14 @@ function App() {
           <div className='expense-input'>
             <div className='expense-input-item'>
               <label>Expense Description</label>
-              <input type='text' placeholder='Enter Expense Description' />
+              <input type='text' value={newdesc} onChange={(e) => setnewdesc(e.target.value)} placeholder='Enter Expense Description' />
             </div>
             <div className='expense-input-item'>
               <label>Price</label>
-              <input type='text' placeholder='Enter the price' />
+              <input type='text' value={newprice} onChange={(e) => setnewprice(e.target.value)} placeholder='Enter the price' />
             </div>
             <div className='expense-input-button'>
-              <button type='button' className='primarybtn'>
+              <button type='button' onClick={handleexpense} className='primarybtn'>
                 Add
               </button>
             </div>
@@ -43,16 +83,17 @@ function App() {
           </div>
 
           <div className='expense-list'>
-            <div className='expense-list-item'>
-              <div>
-                <h3>Expense-1</h3>
-                <p>Price</p>
+            {allexpense.map((item, index) => (
+              <div className='expense-list-item' key={index}>
+                <div>
+                  <h3>{item.description}</h3>
+                  <p>{item.price}</p>
+                </div>
+                <div>
+                  <AiOutlineDelete className='icon' onClick={()=>handledeleteexpense(index)} title="Delete?" />
+                </div>
               </div>
-
-              <div>
-                <AiOutlineDelete className='icon' />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
