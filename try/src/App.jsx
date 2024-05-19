@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { AiOutlineDelete } from 'react-icons/ai';
+import axios from 'axios';
 
 function App() {
   const [showCategorizedBox, setShowCategorizedBox] = useState(true);
@@ -34,16 +35,24 @@ function App() {
 
   const handledeleteexpense = (index)=>{
     let reducedexpense = [...allexpense];
-    reducedexpense.splice(index);
+    reducedexpense.splice(index,1);
 
     localStorage.setItem('expenses',JSON.stringify(reducedexpense));
     setexpense(reducedexpense);
   };
 
   const handleCategorizeClick = () => {
-    const staticLabels = ['Category 1', 'Category 2', 'Category 3'];
-    setCategorizedExpenses(staticLabels);
-    setShowCategorizedBox(true);
+    const expenses = JSON.parse(localStorage.getItem('expenses'));
+    axios.post('http://localhost:5000/categorize', { expenses })
+      .then(response => {
+        console.log(response.data);
+        const staticLabels = ['Category 1', 'Category 2', 'Category 3'];
+        setCategorizedExpenses(staticLabels);
+        setShowCategorizedBox(true);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
   }; 
 
   useEffect(() => {
@@ -87,7 +96,7 @@ function App() {
               <div className='expense-list-item' key={index}>
                 <div>
                   <h3>{item.description}</h3>
-                  <p>{item.price}</p>
+                  <p>Rs.{item.price}</p>
                 </div>
                 <div>
                   <AiOutlineDelete className='icon' onClick={()=>handledeleteexpense(index)} title="Delete?" />
