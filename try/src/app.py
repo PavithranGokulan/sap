@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Allow cross-origin requests
+CORS(app) 
 
 @app.route('/categorize', methods=['POST'])
 def categorize_expenses():
